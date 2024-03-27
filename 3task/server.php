@@ -23,7 +23,7 @@
   $document = isset($_POST['document']) ? 1 : 0;
   $languages = $_POST['leng'];
   
-if (!preg_match('/^[а-яёА-ЯЁa-zA-Z\s]$/', $name)) {
+if (!preg_match('/^[а-яёА-ЯЁa-zA-Z\s]+$/', $name)) {
     echo "Ошибка: Поле ФИО должно содержать только буквы русского и английского алфавита и пробелы";
     exit;
 }
