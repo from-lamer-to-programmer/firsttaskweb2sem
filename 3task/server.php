@@ -43,7 +43,7 @@ if ($gender != '1' && $gender != '2') {
       $last_id = $conn->insert_id; // Получение ID последней вставленной записи
   
       // Вставка выбранных языков программирования в отдельную таблицу
-      $stmt_lang = $conn->prepare("INSERT INTO user_languages (user_id, language) VALUES (?, ?)");
+      $stmt_lang = $conn->prepare("INSERT INTO lang (user_id, language) VALUES (?, ?)");
       $stmt_lang->bind_param("is", $user_id, $language);
   
       foreach ($languages as $language) {
