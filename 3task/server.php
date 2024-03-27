@@ -6,7 +6,6 @@
 
   $conn = mysqli_connect($host, $user, $password, $database);
 
-  $conn = new mysqli($servername, $username, $password, $dbname);
 
   // Проверка подключения
   if ($conn->connect_error) {
