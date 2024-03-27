@@ -29,10 +29,10 @@
       exit;
   }
   
-  if ($gender != 'Мужчина' && $gender != 'Женщина') {
-      echo "Ошибка: Некорректное значение поля Пол.";
-      exit;
-  }
+if ($gender != '1' && $gender != '2') {
+    echo "Ошибка: Некорректное значение поля Пол.";
+    exit;
+}
   
   // Подготовленный запрос для вставки данных в таблицу пользователей
   $stmt = $conn->prepare("INSERT INTO users (name, surname, number, email, date, gender, about, document) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
