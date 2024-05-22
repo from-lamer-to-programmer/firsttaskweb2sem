@@ -78,8 +78,8 @@ function setVal($enName, $param){
 
   if ($error && !empty($_SESSION['login'])) {
     try {
-      $dbFD = $db->prepare("SELECT * FROM form_data WHERE id = ?");
-      $dbFD->execute([$_SESSION['id']]);
+      $dbFD = $db->prepare("SELECT * FROM form_data WHERE user_id = ?");
+      $dbFD->execute([$_SESSION['user_id']]);
       $fet = $dbFD->fetchAll(PDO::FETCH_ASSOC)[0];
       $form_id = $fet['id'];
       $_SESSION['form_id'] = $form_id;
@@ -172,30 +172,24 @@ else{
     val_empty('data', "Неверно введена дата рождения, дата больше настоящей", (strtotime('now') < strtotime($data)));
   }
   val_empty('radio', "Выберите пол", (empty($radio) || !preg_match('/^(m|f)$/', $radio)));
-  if(!empty($lang)){
+  if(!val_empty('lang', "Выберите хотя бы один язык", empty($lang))){
+   
     try {
-        $inQuery = implode(',', array_fill(0, count($lang), '?'));
-        $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
-        foreach ($lang as $key => $value) {
-            $dbLangs->bindValue(($key+1), $value);
-        }
-        $dbLangs->execute();
-        $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
-        
-        if($dbLangs->rowCount() != count($lang)){
-            echo "Неверно выбраны языки";
-        } else {
-            // Все нормально, выводим результат
-            print_r($languages);
-        }
+      $inQuery = implode(',', array_fill(0, count($lang), '?'));
+      $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
+      foreach ($lang as $key => $value) {
+        $dbLangs->bindValue(($key+1), $value);
+      }
+      $dbLangs->execute();
+      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
+      print('Error : ' . $e->getMessage());
+      exit();
     }
-} else {
-    echo "Выберите хотя бы один язык";
-}
+    
+    val_empty('lang', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
+  }
   if(!val_empty('biography', 'Заполните поле', empty($biography))){
     val_empty('biography', 'Длина текста > 65 535 символов', strlen($biography) > 65535);
   }
@@ -222,8 +216,8 @@ else{
    // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
    if ($log) { 
       
-    $stmt = $db->prepare("UPDATE form_data SET name = ?, number = ?, email = ?, data = ?, radio = ?, biography = ? WHERE id = ?");
-    $stmt->execute([$name, $number, $email, strtotime($data), $radio, $biography, $_SESSION['id']]);
+    $stmt = $db->prepare("UPDATE form_data SET name = ?, number = ?, email = ?, data = ?, radio = ?, biography = ? WHERE user_id = ?");
+    $stmt->execute([$name, $number, $email, strtotime($data), $radio, $biography, $_SESSION['user_id']]);
     var_dump ($data);
     print_r($db->errorInfo());
 
@@ -257,7 +251,7 @@ else{
 
 
     $fid = $db->lastInsertId();
-    $stmt = $db->prepare("INSERT INTO form_data (id, name, number, email, data, radio, biography) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO form_data (user_id, name, number, email, data, radio, biography) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$fid, $name, $number, $email, strtotime($data), $radio, $biography]);
     $stmt1 = $db->prepare("INSERT INTO form_data_lang (id_form, id_lang) VALUES (?, ?)");
     foreach($languages as $row){
