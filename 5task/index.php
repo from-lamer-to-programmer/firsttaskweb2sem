@@ -188,7 +188,7 @@ else{
       exit();
     }
     
-    
+ var_dump($languages);
 val_empty('lang', 'Неверно выбраны языки', count($languages) != count($lang));
   }
   if(!val_empty('biography', 'Заполните поле', empty($biography))){
