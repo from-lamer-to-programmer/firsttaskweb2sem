@@ -188,24 +188,7 @@ else{
       exit();
     }
     
- if(!val_empty('lang', "Выберите хотя бы один язык", empty($lang))){
-    try {
-        $inQuery = implode(',', array_fill(0, count($lang), '?'));
-        $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
-        foreach ($lang as $key => $value) {
-            $dbLangs->bindValue(($key+1), $value);
-        }
-        $dbLangs->execute();
-        $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
-        echo "Количество найденных языков: " . $dbLangs->rowCount(); // Вывод количества найденных языков
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
-    
-    val_empty('lang[]', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
-}
+    val_empty('lang', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
   }
   if(!val_empty('biography', 'Заполните поле', empty($biography))){
     val_empty('biography', 'Длина текста > 65 535 символов', strlen($biography) > 65535);
