@@ -42,7 +42,7 @@
       if($its){
         $uid = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
         $_SESSION['login'] = $_POST['login'];
-        $_SESSION['id'] = $uid;
+        $_SESSION['user_id'] = $uid;
         // Делаем перенаправление.
         header('Location: ./');
       }
