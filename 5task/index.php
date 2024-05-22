@@ -188,7 +188,8 @@ else{
       exit();
     }
     
-    val_empty('lang', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
+    
+val_empty('lang', 'Неверно выбраны языки', count($languages) != count($lang));
   }
   if(!val_empty('biography', 'Заполните поле', empty($biography))){
     val_empty('biography', 'Длина текста > 65 535 символов', strlen($biography) > 65535);
