@@ -188,7 +188,7 @@ else{
       exit();
     }
     
- if(!val_empty('lang[]', "Выберите хотя бы один язык", empty($lang))){
+ if(!val_empty('lang', "Выберите хотя бы один язык", empty($lang))){
     try {
         $inQuery = implode(',', array_fill(0, count($lang), '?'));
         $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
