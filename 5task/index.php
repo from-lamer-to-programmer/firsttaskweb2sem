@@ -172,24 +172,30 @@ else{
     val_empty('data', "Неверно введена дата рождения, дата больше настоящей", (strtotime('now') < strtotime($data)));
   }
   val_empty('radio', "Выберите пол", (empty($radio) || !preg_match('/^(m|f)$/', $radio)));
-  if(!val_empty('lang', "Выберите хотя бы один язык", empty($lang))){
-   
+  if(!empty($lang)){
     try {
-      $inQuery = implode(',', array_fill(0, count($lang), '?'));
-      $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
-      foreach ($lang as $key => $value) {
-        $dbLangs->bindValue(($key+1), $value);
-      }
-      $dbLangs->execute();
-      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
+        $inQuery = implode(',', array_fill(0, count($lang), '?'));
+        $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
+        foreach ($lang as $key => $value) {
+            $dbLangs->bindValue(($key+1), $value);
+        }
+        $dbLangs->execute();
+        $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
+        
+        if($dbLangs->rowCount() != count($lang)){
+            echo "Неверно выбраны языки";
+        } else {
+            // Все нормально, выводим результат
+            print_r($languages);
+        }
     }
     catch(PDOException $e){
-      print('Error : ' . $e->getMessage());
-      exit();
+        print('Error : ' . $e->getMessage());
+        exit();
     }
-    
-    val_empty('lang', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
-  }
+} else {
+    echo "Выберите хотя бы один язык";
+}
   if(!val_empty('biography', 'Заполните поле', empty($biography))){
     val_empty('biography', 'Длина текста > 65 535 символов', strlen($biography) > 65535);
   }
