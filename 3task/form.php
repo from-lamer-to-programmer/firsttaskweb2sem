@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Подготовка SQL-запроса
     $sql = "INSERT INTO Users (name, surname, number, email, date, gender, about, document)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
 
