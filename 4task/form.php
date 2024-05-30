@@ -15,35 +15,35 @@
     <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
         <div class="info">
             <div class="mb-3">
-            <input class="form-control input <?php echo (isset($errors['name']) && !empty($errors['name'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="name" placeholder="Имя">
+            <input class="form-control input <?php echo (isset($errors['name']) && !empty($errors['name'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Имя">
                 <div class="invalid-feedback">
                         <?php echo $messages['name'] ?? ''; ?>
                 </div>
             </div>
 
             <div class="mb-3">
-            <input class="form-control input <?php echo (isset($errors['surname']) && $errors['surname'] !== '') ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="surname" placeholder="Фамилия">
+            <input class="form-control input <?php echo (isset($errors['surname']) && !empty($errors['surname'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="surname" placeholder="Фамилия">
                 <div class="invalid-feedback">
                         <?php echo $messages['surname'] ?? ''; ?>
                 </div>
             </div>
 
             <div class="mb-3">
-    <input name="number" id="number" type="text" class="form-control <?php echo (isset($errors['number']) && $errors['number'] !== '') ? 'is-invalid' : ''; ?>" placeholder="Номер" required>
+    <input name="number" id="number" type="text" class="form-control <?php echo (isset($errors['number']) && !empty($errors['number'])) ? 'is-invalid' : ''; ?>" placeholder="Номер" required>
         <div class="invalid-feedback">
             <?php echo $messages['number'] ?? ''; ?>
         </div>
     </div>
 
     <div class="mb-3">
-        <input name="email" id="email" type="email" class="form-control <?php echo (isset($errors['email']) && $errors['email'] !== '') ? 'is-invalid' : ''; ?>" placeholder="Почта" required>
+        <input name="email" id="email" type="email" class="form-control <?php echo (isset($errors['email']) && !empty($errors['email'])) ? 'is-invalid' : ''; ?>" placeholder="Почта" required>
         <div class="invalid-feedback">
                 <?php echo $messages['email'] ?? ''; ?>
         </div>
     </div>
 
     <div class="mb-3">
-        <input name="date" id="date" type="date" class="form-control <?php echo (isset($errors['date']) && $errors['date'] !== '') ? 'is-invalid' : ''; ?>" required>
+        <input name="date" id="date" type="date" class="form-control <?php echo (isset($errors['date']) && !empty($errors['date'])) ? 'is-invalid' : ''; ?>" required>
             <div class="invalid-feedback">
                 <?php echo $messages['date'] ?? ''; ?>
             </div>
@@ -51,14 +51,14 @@
 
                 <h4>Выберите пол:</h4>
         <div class="form-check">
-            <input name="gender" value="1" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && $errors['gender'] !== '') ? 'is-invalid' : ''; ?>" id="male" required>
+            <input name="gender" value="1" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && !empty($errors['gender'])) ? 'is-invalid' : ''; ?>" id="male" required>
             <label class="form-check-label" for="male">Мужчина</label>
             <div class="invalid-feedback">
                 <?php echo $messages['gender'] ?? ''; ?>
             </div>
         </div>
         <div class="form-check">
-            <input name="gender" value="2" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && $errors['gender'] !== '') ? 'is-invalid' : ''; ?>" id="female" required>
+            <input name="gender" value="2" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && !empty($errors['gender'])) ? 'is-invalid' : ''; ?>" id="female" required>
             <label class="form-check-label" for="female">Женщина</label>
             <div class="invalid-feedback">
                 <?php echo $messages['gender'] ?? ''; ?>
@@ -67,7 +67,7 @@
 
         <div class="mb-3">
             <h4>Выберите язык программирования:</h4>
-                <select multiple name="langs[]" class="form-select <?php echo (isset($errors['selectedLangs']) && $errors['selectedLangs'] !== '') ? 'is-invalid' : ''; ?>" required>
+                <select multiple name="langs[]" class="form-select <?php echo (isset($errors['selectedLangs']) && !empty($errors['selectedLangs'])) ? 'is-invalid' : ''; ?>" required>
                 <option value="Pascal">Pascal</option>
                 <option value="C">C</option>
                     <option value="C++">C++</option>
@@ -90,7 +90,7 @@
     </div>
 
     <div class="mb-3 form-check">
-        <input class="form-check-input <?php echo (isset($errors['document']) && $errors['document'] !== '') ? 'is-invalid' : ''; ?>" type="checkbox" name="document" id="document" required>
+        <input class="form-check-input <?php echo (isset($errors['document']) && !empty($errors['document'])) ? 'is-invalid' : ''; ?>" type="checkbox" name="document" id="document" required>
         <label class="form-check-label" for="document">Я согласен(а) с условиями <a href="#">конфиденциальности</a></label>
         <div class="invalid-feedback">
             <?php echo $messages['document'] ?? ''; ?>
