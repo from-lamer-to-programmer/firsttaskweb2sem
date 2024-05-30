@@ -131,7 +131,7 @@ else {
 
 $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
 
-value_empty('allowedLangs', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0, $allowedLangs)) {
+value_empty('allowedLangs', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0, $allowedLangs);
 
 
   if(!value_empty('about', 'Заполните поле', empty($biography))){
