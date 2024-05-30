@@ -186,14 +186,14 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
     exit();
   }
   setcookie('name_value', $name, time() + 24 * 60 * 60 * 365);
-  setcookie('surname_value', $name, time() + 24 * 60 * 60 * 365);
+  setcookie('surname_value', $surname, time() + 24 * 60 * 60 * 365);
   setcookie('number_value', $number, time() + 24 * 60 * 60 * 365);
   setcookie('email_value', $email, time() + 24 * 60 * 60 * 365);
-  setcookie('date_value', $data, time() + 24 * 60 * 60 * 365);
-  setcookie('gender_value', $radio, time() + 24 * 60 * 60 * 365);
-  setcookie('allowedLangs_value', implode(",", $lang), time() + 24 * 60 * 60 * 365);
-  setcookie('about_value', $biography, time() + 24 * 60 * 60 * 365);
-  setcookie('document_value', $check_mark, time() + 24 * 60 * 60 * 365);
+  setcookie('date_value', $date, time() + 24 * 60 * 60 * 365);
+  setcookie('gender_value', $gender, time() + 24 * 60 * 60 * 365);
+  setcookie('allowedLangs_value', implode(",", $allowedLangs), time() + 24 * 60 * 60 * 365);
+  setcookie('about_value', $about, time() + 24 * 60 * 60 * 365);
+  setcookie('document_value', $document, time() + 24 * 60 * 60 * 365);
 
   setcookie('save', '1');
 
