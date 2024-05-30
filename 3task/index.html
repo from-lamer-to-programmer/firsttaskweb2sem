@@ -9,7 +9,10 @@
 </head>
 <body>
     <h1 class="text-center mt-5">Форма записи в базу данных</h1>
-    <form action="server.php" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
+
+
+
+    <form action="form.php" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
         <div class="info">
             <div class="mb-3">
                 <input name="name" id="name" type="text" class="form-control" placeholder="Имя" required>
@@ -29,17 +32,17 @@
             <div class="mb-3">
                 <h4>Выберите пол:</h4>
                 <div class="form-check">
-                    <input name="gen" value="1" type="radio" class="form-check-input" id="male" required>
+                    <input name="gender" value="1" type="radio" class="form-check-input" id="male" required>
                     <label class="form-check-label" for="male">Мужчина</label>
                 </div>
                 <div class="form-check">
-                    <input name="gen" value="2" type="radio" class="form-check-input" id="female" required>
+                    <input name="gender" value="2" type="radio" class="form-check-input" id="female" required>
                     <label class="form-check-label" for="female">Женщина</label>
                 </div>
             </div>
             <div class="mb-3">
                 <h4>Выберите язык программирования:</h4>
-                <select multiple name="leng[]" class="form-select" required>
+                <select multiple name="langs[]" class="form-select" required>
                     <option value="Pascal">Pascal</option>
                     <option value="C">C</option>
                     <option value="C++">C++</option>
