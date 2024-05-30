@@ -137,7 +137,7 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
   if(!value_empty('about', 'Заполните поле', empty($about))){
     value_empty('about', 'Длина текста > 400 символов', strlen($about) > 400);
   }
-  value_empty('document', "Ознакомьтесь с контрактом", empty($check_mark));
+  value_empty('document', "Ознакомьтесь с контрактом", empty($document));
 
   if ($error) {
     header('Location: index.php');
