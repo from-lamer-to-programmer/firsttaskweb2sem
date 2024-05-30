@@ -16,10 +16,10 @@
     <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
         <div class="info">
             <div class="mb-3">
-            <input class="form-control input <?php echo (isp($errors['name']) != NULL) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Имя">
-                <div class="invalid-feedback">
-                        <?php echo $messages['name']?>
-                </div>
+            <label>
+                <input class="input <?php echo (isp($errors['name']) != NULL) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Имя">
+                <div class="invalid-feedback"><?php echo $messages['name']?></div>
+              </label>
             </div>
 
             <div class="mb-3">
