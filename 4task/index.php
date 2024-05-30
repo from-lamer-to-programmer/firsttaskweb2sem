@@ -15,7 +15,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  $name = (!empty($_COOKIE['name_error']) ? $_COOKIE['name_error'] : '');
+  $name = (!empty($_COOKIE['name_error']) ? $_COOKIE['name_error'] : ''); 
   $surname = (!empty($_COOKIE['surname_error']) ? $_COOKIE['surname_error'] : '');
   $number = (!empty($_COOKIE['number_error']) ? $_COOKIE['number_error'] : '');
   $email = (!empty($_COOKIE['email_error']) ? $_COOKIE['email_error'] : '');
@@ -127,7 +127,7 @@ else {
     value_empty('date', "Неверно введена дата рождения, дата больше настоящей", (strtotime("now") < $date));
   }
   
-val_empty('gender', "Выберите пол", (empty($gender) || !preg_match('/^(m|f)$/', $gender)));
+value_empty('gender', "Выберите пол", (empty($gender) || !preg_match('/^(m|f)$/', $gender)));
 
 $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
 
