@@ -89,9 +89,9 @@ else {
         $res = true;
       }
 
-    if($cook == 'lang'){
+    if($cook == 'selectedLangs'){
       global $lang;
-      $setVal = ($lang != '') ? implode(",", $lang) : '';
+      $setVal = ($selectedLangs != '') ? implode(",", $selectedLangs) : '';
     }
 
     setcookie($cook.'_value', $setVal, time() + 30 * 24 * 60 * 60);
@@ -134,8 +134,8 @@ $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java
 value_empty('allowedLangs', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0, $allowedLangs);
 
 
-  if(!value_empty('about', 'Заполните поле', empty($biography))){
-    value_empty('about', 'Длина текста > 400 символов', strlen($biography) > 400);
+  if(!value_empty('about', 'Заполните поле', empty($about))){
+    value_empty('about', 'Длина текста > 400 символов', strlen($about) > 400);
   }
   value_empty('document', "Ознакомьтесь с контрактом", empty($check_mark));
 
@@ -203,7 +203,6 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
 // Закрытие соединения с базой данных
 $conn->close();
 ?>
-
 
 
 
