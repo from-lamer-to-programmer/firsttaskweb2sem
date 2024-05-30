@@ -127,7 +127,7 @@ else {
     value_empty('date', "Неверно введена дата рождения, дата больше настоящей", (strtotime("now") < $date));
   }
   
-value_empty('gender', "Выберите пол", (empty($gender) || !preg_match('/^(m|f)$/', $gender)));
+  value_empty('gender', "Выберите пол", (empty($gender)));
 
 $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
 
