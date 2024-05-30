@@ -1,108 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurnosov 4 task</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="index4.css" rel="stylesheet" type="text/css" />
-    <title>Задание №4 Курносов</title>
-  </head>
-  <body class="m-4">
+</head>
+<body>
+    <h1 class="text-center mt-5">Форма записи в базу данных</h1>
 
 
-    <form class="popup" action="" method="post">
+
+    <form action="index.php" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
     <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
-    <div>
-          <label>
-            <input class="input <?php echo (isp($errors['name']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Ф.И.О">
-            <div class="errpodinp"><?php echo $messages['name']?></div>
-          </label>
+        <div class="info">
+            <div class="mb-3">
+            <input class="form-control input <?php echo (isset($errors['name']) && $errors['name'] !== '') ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="name" placeholder="Имя">
+                <div class="invalid-feedback">
+                        <?php echo $errors['name'] ?? ''; ?>
+                </div>
+            </div>
+
+            <div class="mb-3">
+            <input class="form-control input <?php echo (isset($errors['surname']) && $errors['surname'] !== '') ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="surname" placeholder="Фамилия">
+                <div class="invalid-feedback">
+                        <?php echo $errors['surname'] ?? ''; ?>
+                </div>
+            </div>
+
+            <div class="mb-3">
+    <input name="number" id="number" type="text" class="form-control <?php echo (isset($errors['number']) && $errors['number'] !== '') ? 'is-invalid' : ''; ?>" placeholder="Номер" required>
+        <div class="invalid-feedback">
+            <?php echo $errors['number'] ?? ''; ?>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input name="email" id="email" type="email" class="form-control <?php echo (isset($errors['email']) && $errors['email'] !== '') ? 'is-invalid' : ''; ?>" placeholder="Почта" required>
+        <div class="invalid-feedback">
+                <?php echo $errors['email'] ?? ''; ?>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input name="date" id="date" type="date" class="form-control <?php echo (isset($errors['date']) && $errors['date'] !== '') ? 'is-invalid' : ''; ?>" required>
+            <div class="invalid-feedback">
+                <?php echo $errors['date'] ?? ''; ?>
+            </div>
+    </div>
+
+                <h4>Выберите пол:</h4>
+        <div class="form-check">
+            <input name="gender" value="1" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && $errors['gender'] !== '') ? 'is-invalid' : ''; ?>" id="male" required>
+            <label class="form-check-label" for="male">Мужчина</label>
+            <div class="invalid-feedback">
+                <?php echo $errors['gender'] ?? ''; ?>
+            </div>
+        </div>
+        <div class="form-check">
+            <input name="gender" value="2" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && $errors['gender'] !== '') ? 'is-invalid' : ''; ?>" id="female" required>
+            <label class="form-check-label" for="female">Женщина</label>
+            <div class="invalid-feedback">
+                <?php echo $errors['gender'] ?? ''; ?>
+            </div>
         </div>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['number']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['number']); ?>" type="tel" name="number" placeholder="Номер телефона">
-            <div class="errpodinp"><?php echo $messages['number']?></div>
-          </label>
+        <div class="mb-3">
+            <h4>Выберите язык программирования:</h4>
+                <select multiple name="langs[]" class="form-select <?php echo (isset($errors['selectedLangs']) && $errors['selectedLangs'] !== '') ? 'is-invalid' : ''; ?>" required>
+                <option value="Pascal">Pascal</option>
+                <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="PHP">PHP</option>
+                    <option value="Python">Python</option>
+                    <option value="Java">Java</option>
+                    <option value="Haskel">Haskel</option>
+                    <option value="Clojure">Clojure</option>
+                    <option value="Prolog">Prolog</option>
+                    <option value="Scara">Scara</option>
+                </select>
+            </div>
+            <div class="mb-3">
+    <h4>Напишите о себе:</h4>
+        <textarea name="about" class="form-control" cols="30" rows="8" required></textarea>
+        <div class="invalid-feedback">
+             <?php echo $errors['about'] ?? ''; ?>
         </div>
+    </div>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['email']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['email']); ?>" type="email" name="email" placeholder="Введите почту">
-            <div class="errpodinp"><?php echo $messages['email']?></div>
-
-          </label>
+    <div class="mb-3 form-check">
+        <input class="form-check-input <?php echo (isset($errors['document']) && $errors['document'] !== '') ? 'is-invalid' : ''; ?>" type="checkbox" name="document" id="document" required>
+        <label class="form-check-label" for="document">Я согласен(а) с условиями <a href="#">конфиденциальности</a></label>
+        <div class="invalid-feedback">
+            <?php echo $errors['document'] ?? ''; ?>
         </div>
+    </div>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['data']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['data']); ?>" type="date" name="data">
-            <div class="errpodinp"><?php echo $messages['data']?></div>
-          </label>
+<button class="btn btn-primary" type="submit">Submit</button>
         </div>
-
-        <div class="my-3">
-          Пол
-          <br />
-          <div class="my-2">
-            <label>
-              <input
-                class="ml-3 <?php echo (isp($errors['radio']) != NULL) ? 'colred' : ''; ?>"
-                type="radio"
-                name="radio"
-                value="m"
-                checked
-              />Мужской 
-            </label>
-            <label>
-              <input
-                class="ml-3 <?php echo (isp($errors['radio']) != NULL) ? 'colred' : ''; ?>"
-                type="radio"
-                name="radio"
-                value="f"
-              />Женский
-            </label>
-          </div>
-        </div>
-
-        <div>
-          <label class="input">
-            Любимый язык программирования<br />
-            <select  id="lang" class="my-2 <?php echo (isp($errors['lang']) != NULL) ? 'borred' : ''; ?>"  name="lang[]" multiple="multiple">
-              <option value="Pascal" <?php echo (in_array('Pascal', $langsarray)) ? 'selected' : ''; ?>>Pascal</option>
-              <option value="C" <?php echo (in_array('C', $langsarray)) ? 'selected' : ''; ?>>C</option>
-              <option value="C++" <?php echo (in_array('C++', $langsarray)) ? 'selected' : ''; ?>>C++</option>
-              <option value="JavaScript" <?php echo (in_array('JavaScript', $langsarray)) ? 'selected' : ''; ?>>JavaScript</option>
-              <option value="PHP" <?php echo (in_array('PHP', $langsarray)) ? 'selected' : ''; ?>>PHP</option>
-              <option value="Python" <?php echo (in_array('Python', $langsarray)) ? 'selected' : ''; ?>>Python</option>
-              <option value="Java" <?php echo (in_array('Java', $langsarray)) ? 'selected' : ''; ?>>Java</option>
-              <option value="Haskel" <?php echo (in_array('Haskel', $langsarray)) ? 'selected' : ''; ?>>Haskel</option>
-              <option value="Clojure" <?php echo (in_array('Clojure', $langsarray)) ? 'selected' : ''; ?>>Clojure</option>
-              <option value="Scala" <?php echo (in_array('Scala', $langsarray)) ? 'selected' : ''; ?>>Scala</option>
-            </select>
-            <div class="errpodinp"><?php echo $messages['lang']?></div>
-          </label>
-        </div>
-
-        <div>
-          <br/>
-          Биография <br />
-          <label>
-            <textarea name="biography" placeholder="Биография" class="input <?php echo (isp($errors['biography']) != NULL) ? 'borred' : ''; ?>"><?php echo isp($values['biography']); ?></textarea>
-            <div class="errpodinp"><?php echo $messages['biography']?></div>
-          </label>
-        </div>
-
-      
-        <div >
-            <input type="checkbox" name="check_mark" id="oznakomlen" <?php echo ( isp($values['check_mark']) != NULL) ? 'checked' : ''; ?>>
-            <label for="oznakomlen" class="<?php echo (isp($errors['check_mark']) != NULL) ? 'colred' : ''; ?>">С контрактом ознакомлен (а)</label>
-            <div class="errpodinp"><?php echo $messages['check_mark']?></div>
-        </div>
-
-        <button type="submit" class="form_button my-3">Отправить</button>
-      </div>
     </form>
 </body>
 </html>
