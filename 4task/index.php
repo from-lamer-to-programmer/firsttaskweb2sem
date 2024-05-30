@@ -29,6 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array();
   $values = array();
 
+ function isp($value){
+    if(isset($value)) return $value;
+    return;
+ }
+    
   function value_empty($pName, $val){
     global $errors, $values, $messages;
     $errors[$pName] = !empty($_COOKIE[$pName.'_error']);
