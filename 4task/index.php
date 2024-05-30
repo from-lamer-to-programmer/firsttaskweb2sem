@@ -79,7 +79,7 @@ else {
 
     $number1 = preg_replace('/\D/', '', $number);
 
-    function value_empty($cook, $comment, $usl){
+    function value_empty($cook, $comment, $usl, $allowedLangs = []){
       global $error;
       $res = false;
       $setVal = $_POST[$cook];
@@ -101,13 +101,13 @@ else {
 
   if(!value_empty('name', 'Заполните поле', empty($name))){
     if(!value_empty('name', 'Длина поля > 75 символов', strlen($name) > 75)){
-      value_empty('name', 'Поле не соответствует требованиям: <i>Имя</i>, кириллица', !preg_match('/^([а-яё]+-?[а-яё]+)( [а-яё]+-?[а-яё]+){1,2}$/Diu', $name));
+      value_empty('name', 'Поле не соответствует требованиям: <i>Имя</i>, кириллица', !preg_match('/^([а-яА-ЯёЁ]+-?[а-яА-ЯёЁ]+)( [а-яА-ЯёЁ]+-?[а-яА-ЯёЁ]+){0,2}$/u'', $name));
     }
   }
 
   if(!value_empty('surname', 'Заполните поле', empty($surname))){
     if(!value_empty('surname', 'Длина поля > 75 символов', strlen($surname) > 75)){
-      value_empty('surname', 'Поле не соответствует требованиям: <i>Фаимилия</i>, кириллица', !preg_match('/^([а-яё]+-?[а-яё]+)( [а-яё]+-?[а-яё]+){1,2}$/Diu', $surname));
+      value_empty('surname', 'Поле не соответствует требованиям: <i>Фаимилия</i>, кириллица', !preg_match('/^([а-яА-ЯёЁ]+-?[а-яА-ЯёЁ]+)( [а-яА-ЯёЁ]+-?[а-яА-ЯёЁ]+){0,2}$/u', $surname));
     }
   }
 
@@ -126,14 +126,13 @@ else {
   if(!value_empty('date', "Выберите дату рождения", empty($date))){
     value_empty('date', "Неверно введена дата рождения, дата больше настоящей", (strtotime("now") < $date));
   }
-  value_empty('gender', "Выберите пол", (empty($gender) || !preg_match('/^(m|f)$/', $gender)));
+  
+  value_empty('gender', "Выберите пол", (empty($gender), $gender)));
 
 $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
-if (!empty($_POST[$cook]) && (!is_array($_POST[$cook]) || count(array_diff($_POST[$cook], $allowedLangs)) > 0)) {
-    setcookie($cook . '_error', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), time() + 24 * 60 * 60);
-    $error = true;
-    $res = true;
-}
+
+value_empty('allowedLangs', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0, $allowedLangs)) {
+
 
   if(!value_empty('about', 'Заполните поле', empty($biography))){
     value_empty('about', 'Длина текста > 400 символов', strlen($biography) > 400);
