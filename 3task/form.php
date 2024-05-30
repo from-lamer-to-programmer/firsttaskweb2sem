@@ -15,6 +15,17 @@ if ($conn->connect_error) {
 // Проверка, была ли отправлена форма
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Получение данных из формы
+    $name = $_POST["name"];
+    $surname = $_POST["surname"];
+    $number = $_POST["number"];
+    $email = $_POST["email"];
+    $date = $_POST["date"];
+    $gender = $_POST["gender"];
+    $about = $_POST["about"];
+    $document = isset($_POST["document"]) ? 1 : 0;
+    $selectedLangs = $_POST["langs"];
+
    $errors = array(); // массив для хранения ошибок
 
     // Валидация поля "name"
@@ -62,17 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // если есть ошибки, то выводим их
 
 
-
-    // Получение данных из формы
-    $name = $_POST["name"];
-    $surname = $_POST["surname"];
-    $number = $_POST["number"];
-    $email = $_POST["email"];
-    $date = $_POST["date"];
-    $gender = $_POST["gender"];
-    $about = $_POST["about"];
-    $document = isset($_POST["document"]) ? 1 : 0;
-    $selectedLangs = $_POST["langs"];
 
     // Подготовка SQL-запроса
     $sql = "INSERT INTO Users (name, surname, number, email, date, gender, about, document)
