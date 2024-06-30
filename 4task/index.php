@@ -73,7 +73,7 @@ else {
 
     $number1 = preg_replace('/\D/', '', $number);
 
-    function val_empty($cook, $comment, $usl){
+    function value_empty($cook, $comment, $usl){
       global $error;
       $res = false;
       $setVal = $_POST[$cook];
