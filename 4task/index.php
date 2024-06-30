@@ -198,7 +198,7 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
 
   setcookie('save', '1');
 
-  header('Location: index.php');
+  //header('Location: index.php');
 }
 
 // Закрытие соединения с базой данных
