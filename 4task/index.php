@@ -149,6 +149,7 @@ else {
   value_empty('document', "Ознакомьтесь с контрактом", empty($document));
 
   if ($error) {
+    print($error);
     header('Location: index.php');
     exit();
   }
@@ -192,8 +193,8 @@ else {
   setcookie('document_value', $document, time() + 24 * 60 * 60 * 365);
 
   setcookie('save', '1');
-  print("siiiiii");
-  //header('Location: index.php');
+
+  header('Location: index.php');
 }
 
 ?>
