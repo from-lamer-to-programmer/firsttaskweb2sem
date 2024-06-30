@@ -192,8 +192,8 @@ else {
   setcookie('document_value', $document, time() + 24 * 60 * 60 * 365);
 
   setcookie('save', '1');
-
-  header('Location: index.php');
+  print("siiiiii");
+  //header('Location: index.php');
 }
 
 ?>
