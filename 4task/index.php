@@ -2,13 +2,14 @@
 
 header('Content-Type: text/html; charset=UTF-8');
 
-// Подключение к базе данных
-$servername = "localhost";
-$username = "u67297";
-$password = "5665219";
-$dbname = "u67297";
+$db;
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+include('database.php');
+
+function isp($value){
+  if(isset($value)) return $value;
+  return;
+}
 
 // Проверка соединения
 if ($conn->connect_error) {
@@ -29,10 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array();
   $values = array();
 
- function isp($value){
-    if(isset($value)) return $value;
-    return;
- }
     
   function value_empty($pName, $val){
     global $errors, $values, $messages;
@@ -157,29 +154,15 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
 
   }
 
- try {
-    // Подготовка SQL-запроса
-    $sql = "INSERT INTO Users (name, surname, number, email, date, gender, about, document)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssissssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
-
-    // Выполнение запроса
-    if ($stmt->execute()) {
-    // Вставка выбранных языков в таблицу Languages
-    foreach ($selectedLangs as $lang) {
-        $sql = "INSERT INTO Languages (language_name) VALUES ('$lang')";
-        if ($conn->query($sql) === FALSE) {
-            echo "Ошибка при вставке языка: " . $conn->error;
-        }
+  try {
+    $stmt = $db->prepare("INSERT INTO Users (name, surname, number, email, date, gender, about, document)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$name, $surname, $number, $email, $date, $gender, $about, $document]);
+    $fid = $db->lastInsertId();
+    $stmt1 = $db->prepare("INSERT INTO UserLanguages (user_id, language_id) VALUES (?, ?)");
+    foreach($languages as $row){
+        $stmt1->execute([$fid, $row['id']]);
     }
-        echo "Данные успешно записаны в базу данных.";
-    } else {
-        echo "Ошибка при записи данных: " . $stmt->error;
-    }
-
-    // Закрытие подготовленного оператора
-    $stmt->close();
   }
   catch(PDOException $e){
     print('Error : ' . $e->getMessage());
