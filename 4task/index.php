@@ -11,10 +11,7 @@ function isp($value){
   return;
 }
 
-// Проверка соединения
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $name = (!empty($_COOKIE['name_error']) ? $_COOKIE['name_error'] : ''); 
   $surname = (!empty($_COOKIE['surname_error']) ? $_COOKIE['surname_error'] : '');
@@ -184,8 +181,6 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
   //header('Location: index.php');
 }
 
-// Закрытие соединения с базой данных
-$conn->close();
 ?>
 
 
