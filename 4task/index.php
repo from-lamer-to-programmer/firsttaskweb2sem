@@ -90,7 +90,7 @@ else {
       }
 
     if($cook == 'selectedLangs'){
-      global $lang;
+      global $selectedLangs;
       $setVal = ($selectedLangs != '') ? implode(",", $selectedLangs) : '';
     }
 
