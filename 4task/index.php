@@ -161,7 +161,7 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
      // Подготовленный запрос для вставки данных в таблицу пользователей
   $stmt = $conn->prepare("INSERT INTO users (name, surname, number, email, date, gender, about, document) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
   $stmt->bind_param("ssissssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
-  
+  echo "<script>console.log('Начато выполнение запроса' );</script>";
   // Выполнение запроса
   if ($stmt->execute()) {
       $last_id = $conn->insert_id; // Получение ID последней вставленной записи
@@ -189,9 +189,10 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
     $stmt->close();
   }
   catch(PDOException $e){
-    echo('Error : ' . $e->getMessage());
+    print('Error : ' . $e->getMessage());
     exit();
   }
+    echo "<script>console.log('Закончено выполнение запроса' );</script>";
   setcookie('name_value', $name, time() + 24 * 60 * 60 * 365);
   setcookie('surname_value', $surname, time() + 24 * 60 * 60 * 365);
   setcookie('number_value', $number, time() + 24 * 60 * 60 * 365);
