@@ -158,31 +158,38 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
   }
 
   try {
-    // Подготовка SQL-запроса
-    $sql = "INSERT INTO Users (name, surname, number, email, date, gender, about, document)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
-
-    // Выполнение запроса
-    if ($stmt->execute()) {
-    // Вставка выбранных языков в таблицу Languages
-    foreach ($selectedLangs as $lang) {
-        $sql = "INSERT INTO Languages (language_name) VALUES ('$lang')";
-        if ($conn->query($sql) === FALSE) {
-            echo "Ошибка при вставке языка: " . $conn->error;
-        }
-    }
-        echo "Данные успешно записаны в базу данных.";
-    } else {
-        echo "Ошибка при записи данных: " . $stmt->error;
-    }
+     // Подготовленный запрос для вставки данных в таблицу пользователей
+  $stmt = $conn->prepare("INSERT INTO users (name, surname, number, email, date, gender, about, document) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+  $stmt->bind_param("ssissssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
+  
+  // Выполнение запроса
+  if ($stmt->execute()) {
+      $last_id = $conn->insert_id; // Получение ID последней вставленной записи
+  
+      // Вставка выбранных языков программирования в отдельную таблицу
+      $stmt_lang = $conn->prepare("INSERT INTO lang (user_id, language) VALUES (?, ?)");
+      $stmt_lang->bind_param("is", $user_id, $language);
+  
+      foreach ($languages as $language) {
+          if (in_array($language, ['Pascal', 'C', 'C++', 'JavaScript', 'PHP', 'Python', 'Java', 'Haskel', 'Clojure', 'Prolog', 'Scara'])) {
+              $user_id = $last_id;
+              $stmt_lang->execute();
+          } else {
+              echo "Ошибка: Некорректное значение в списке ЯП.";
+              exit;
+          }
+      }
+  
+      echo "Данные успешно сохранены.";
+  } else {
+      echo "Ошибка при сохранении данных: " . $conn->error;
+  }
 
     // Закрытие подготовленного оператора
     $stmt->close();
   }
   catch(PDOException $e){
-    print('Error : ' . $e->getMessage());
+    echo('Error : ' . $e->getMessage());
     exit();
   }
   setcookie('name_value', $name, time() + 24 * 60 * 60 * 365);
