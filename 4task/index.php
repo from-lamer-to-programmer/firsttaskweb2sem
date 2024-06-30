@@ -73,12 +73,12 @@ else {
 
     $number1 = preg_replace('/\D/', '', $number);
 
-    function value_empty($cook, $comment, $usl, $allowedLangs = []){
+    function val_empty($cook, $comment, $usl){
       global $error;
       $res = false;
       $setVal = $_POST[$cook];
       if ($usl) {
-        setcookie($cook.'_error', $comment, time() + 24 * 60 * 60);
+        setcookie($cook.'_error', $comment, time() + 24 * 60 * 60); 
         $error = true;
         $res = true;
       }
@@ -123,9 +123,24 @@ else {
   
   value_empty('gender', "Выберите пол", (empty($gender)));
 
-$allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
-
-value_empty('allowedLangs', "Поле 'Языки' должно содержать один или более из следующих языков: " . implode(", ", $allowedLangs), !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0, $allowedLangs);
+  if(!val_empty('lang', "Выберите хотя бы один язык", empty($allowedLangs))){
+   
+    try {
+      $inQuery = implode(',', array_fill(0, count($lang), '?'));
+      $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
+      foreach ($lang as $key => $value) {
+        $dbLangs->bindValue(($key+1), $value);
+      }
+      $dbLangs->execute();
+      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e){
+      print('Error : ' . $e->getMessage());
+      exit();
+    }
+    
+    val_empty('allowedLangs', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
+  }
 
 
   if(!value_empty('about', 'Заполните поле', empty($about))){
@@ -178,14 +193,7 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
 
   setcookie('save', '1');
 
-  //header('Location: index.php');
+  header('Location: index.php');
 }
 
 ?>
-
-
-
-
-
-
-
