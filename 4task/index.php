@@ -123,7 +123,7 @@ else {
   
   value_empty('gender', "Выберите пол", (empty($gender)));
 
-  if(!val_empty('lang', "Выберите хотя бы один язык", empty($allowedLangs))){
+  if(!value_empty('lang', "Выберите хотя бы один язык", empty($allowedLangs))){
    
     try {
       $inQuery = implode(',', array_fill(0, count($lang), '?'));
