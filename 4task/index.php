@@ -74,7 +74,7 @@ else {
     $gender = (!empty($_POST['gender']) ? $_POST['gender'] : '');
     $selectedLangs = (!empty($_POST['selectedLangs']) ? $_POST['selectedLangs'] : '');
     $about = (!empty($_POST['about']) ? $_POST['about'] : '');
-    $check_mark = (!empty($_POST['document']) ? $_POST['document'] : '');
+    $document = (!empty($_POST['document']) ? $_POST['document'] : '');
     $error = false;
 
     $number1 = preg_replace('/\D/', '', $number);
@@ -157,33 +157,26 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
 
   }
 
-  try {
-     // Подготовленный запрос для вставки данных в таблицу пользователей
-  $stmt = $conn->prepare("INSERT INTO users (name, surname, number, email, date, gender, about, document) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-  $stmt->bind_param("ssissssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
-  echo "<script>console.log('Начато выполнение запроса' );</script>";
-  // Выполнение запроса
-  if ($stmt->execute()) {
-      $last_id = $conn->insert_id; // Получение ID последней вставленной записи
-  
-      // Вставка выбранных языков программирования в отдельную таблицу
-      $stmt_lang = $conn->prepare("INSERT INTO lang (user_id, language) VALUES (?, ?)");
-      $stmt_lang->bind_param("is", $user_id, $language);
-  
-      foreach ($languages as $language) {
-          if (in_array($language, ['Pascal', 'C', 'C++', 'JavaScript', 'PHP', 'Python', 'Java', 'Haskel', 'Clojure', 'Prolog', 'Scara'])) {
-              $user_id = $last_id;
-              $stmt_lang->execute();
-          } else {
-              echo "Ошибка: Некорректное значение в списке ЯП.";
-              exit;
-          }
-      }
-  
-      echo "Данные успешно сохранены.";
-  } else {
-      echo "Ошибка при сохранении данных: " . $conn->error;
-  }
+ try {
+    // Подготовка SQL-запроса
+    $sql = "INSERT INTO Users (name, surname, number, email, date, gender, about, document)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssissssi", $name, $surname, $number, $email, $date, $gender, $about, $document);
+
+    // Выполнение запроса
+    if ($stmt->execute()) {
+    // Вставка выбранных языков в таблицу Languages
+    foreach ($selectedLangs as $lang) {
+        $sql = "INSERT INTO Languages (language_name) VALUES ('$lang')";
+        if ($conn->query($sql) === FALSE) {
+            echo "Ошибка при вставке языка: " . $conn->error;
+        }
+    }
+        echo "Данные успешно записаны в базу данных.";
+    } else {
+        echo "Ошибка при записи данных: " . $stmt->error;
+    }
 
     // Закрытие подготовленного оператора
     $stmt->close();
@@ -192,7 +185,7 @@ value_empty('allowedLangs', "Поле 'Языки' должно содержат
     print('Error : ' . $e->getMessage());
     exit();
   }
-    echo "<script>console.log('Закончено выполнение запроса' );</script>";
+  
   setcookie('name_value', $name, time() + 24 * 60 * 60 * 365);
   setcookie('surname_value', $surname, time() + 24 * 60 * 60 * 365);
   setcookie('number_value', $number, time() + 24 * 60 * 60 * 365);
