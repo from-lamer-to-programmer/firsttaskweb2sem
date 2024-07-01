@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   include('form.php');
 }
-// Проверка, была ли отправлена форма
+// post
 else {
 
 
@@ -105,42 +105,33 @@ else {
     }
   }
 
+ 
   if(!value_empty('number', 'Заполните поле', empty($number))){
     if(!value_empty('number', 'Длина поля некорректна', strlen($number) != 11)){
       value_empty('number', 'Поле должен содержать только цифры"', ($number != $number1));
     }
   }
 
+
   if(!value_empty('email', 'Заполните поле', empty($email))){
     if(!value_empty('email', 'Длина поля > 255 символов', strlen($email) > 255)){
       value_empty('email', 'Поле не соответствует требованию example@mail.ru', !preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/', $email));
     }
   }
-
+ 
   if(!value_empty('date', "Выберите дату рождения", empty($date))){
     value_empty('date', "Неверно введена дата рождения, дата больше настоящей", (strtotime("now") < $date));
   }
-  
+ 
   value_empty('gender', "Выберите пол", (empty($gender)));
 
-  if(!value_empty('lang', "Выберите хотя бы один язык", empty($allowedLangs))){
-   
-    try {
-      $inQuery = implode(',', array_fill(0, count($lang), '?'));
-      $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
-      foreach ($lang as $key => $value) {
-        $dbLangs->bindValue(($key+1), $value);
-      }
-      $dbLangs->execute();
-      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
-    }
-    catch(PDOException $e){
-      print('Error : ' . $e->getMessage());
-      exit();
-    }
-    
-    val_empty('allowedLangs', 'Неверно выбраны языки', $dbLangs->rowCount() != count($lang));
-  }
+ 
+
+  value_empty('selectedLangs', "Выберите хотя бы один язык", empty($selectedLangs));
+  
+
+  
+
 
 
   if(!value_empty('about', 'Заполните поле', empty($about))){
@@ -149,9 +140,10 @@ else {
   value_empty('document', "Ознакомьтесь с контрактом", empty($document));
 
   if ($error) {
-    print($error);
+   
     header('Location: index.php');
     exit();
+
   }
 
   else {
