@@ -11,7 +11,7 @@
 
 
 
-    <form action="index.php" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
+    <form action="" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
     <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
         <div class="info">
             <div class="mb-3">
@@ -65,22 +65,24 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <h4>Выберите язык программирования:</h4>
-                <select multiple name="langs[]" class="form-select <?php echo (isset($errors['selectedLangs']) && !empty($errors['selectedLangs'])) ? 'is-invalid' : ''; ?>" required>
-                <option value="Pascal">Pascal</option>
-                <option value="C">C</option>
-                    <option value="C++">C++</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="PHP">PHP</option>
-                    <option value="Python">Python</option>
-                    <option value="Java">Java</option>
-                    <option value="Haskel">Haskel</option>
-                    <option value="Clojure">Clojure</option>
-                    <option value="Prolog">Prolog</option>
-                    <option value="Scara">Scara</option>
-                </select>
-            </div>
+        <div>
+          <label class="input">
+            Любимый язык программирования<br />
+            <select  id="selectedLangs" class="my-2 <?php echo (isp($errors['selectedLangs']) != NULL) ? 'borred' : ''; ?>"  name="selectedLangs[]" multiple="multiple">
+              <option value="Pascal" <?php echo (in_array('Pascal', $langsarray)) ? 'selected' : ''; ?>>Pascal</option>
+              <option value="C" <?php echo (in_array('C', $langsarray)) ? 'selected' : ''; ?>>C</option>
+              <option value="C++" <?php echo (in_array('C++', $langsarray)) ? 'selected' : ''; ?>>C++</option>
+              <option value="JavaScript" <?php echo (in_array('JavaScript', $langsarray)) ? 'selected' : ''; ?>>JavaScript</option>
+              <option value="PHP" <?php echo (in_array('PHP', $langsarray)) ? 'selected' : ''; ?>>PHP</option>
+              <option value="Python" <?php echo (in_array('Python', $langsarray)) ? 'selected' : ''; ?>>Python</option>
+              <option value="Java" <?php echo (in_array('Java', $langsarray)) ? 'selected' : ''; ?>>Java</option>
+              <option value="Haskel" <?php echo (in_array('Haskel', $langsarray)) ? 'selected' : ''; ?>>Haskel</option>
+              <option value="Clojure" <?php echo (in_array('Clojure', $langsarray)) ? 'selected' : ''; ?>>Clojure</option>
+              <option value="Scala" <?php echo (in_array('Scala', $langsarray)) ? 'selected' : ''; ?>>Scala</option>
+            </select>
+            <div class="errpodinp"><?php echo $messages['lang']?></div>
+          </label>
+        </div>
             <div class="mb-3">
     <h4>Напишите о себе:</h4>
         <textarea name="about" class="form-control" cols="30" rows="8" required></textarea>
