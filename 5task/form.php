@@ -1,69 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="bootstrap.min.css" />
-    <link href="index5.css" rel="stylesheet" type="text/css" />
-    <title>Задание №5</title>
-  </head>
-  <body class="m-4">
-      
-      <form class="popup" action="" method="post">
-      <div>
-        <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
-        <div class="message message_info"><?php if(isset($messages['info'])) echo $messages['info']; ?></div>
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['name']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Ф.И.О">
-            <div class="errpodinp"><?php echo $messages['name']?></div>
-          </label>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurnosov 4 task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="text-center mt-5">Форма записи в базу данных</h1>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['number']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['number']); ?>" type="tel" name="number" placeholder="Номер телефона">
-            <div class="errpodinp"><?php echo $messages['number']?></div>
-          </label>
-        </div>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['email']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['email']); ?>" type="email" name="email" placeholder="Введите почту">
-            <div class="errpodinp"><?php echo $messages['email']?></div>
 
-          </label>
-        </div>
+    <form action="" method="POST" class="mx-auto mt-5" style="max-width: 600px;">
+    <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
+    <div class="message message_info"><?php if(isset($messages['info'])) echo $messages['info']; ?></div>
+        <div class="info">
+            <div class="mb-3">
+            <input class="form-control input <?php echo (isset($errors['name']) && !empty($errors['name'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['name']); ?>" type="text" name="name" placeholder="Имя">
+                <div class="invalid-feedback">
+                        <?php echo $messages['name'] ?? ''; ?>
+                </div>
+            </div>
 
-        <div>
-          <label>
-            <input class="input <?php echo (isp($errors['data']) != NULL) ? 'borred' : ''; ?>" value="<?php echo isp($values['data']); ?>" type="date" name="data">
-            <div class="errpodinp"><?php echo $messages['data']?></div>
-          </label>
-        </div>
+            <div class="mb-3">
+            <input class="form-control input <?php echo (isset($errors['surname']) && !empty($errors['surname'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['surname']); ?>" type="text" name="surname" placeholder="Фамилия">
+                <div class="invalid-feedback">
+                        <?php echo $messages['surname'] ?? ''; ?>
+                </div>
+            </div>
 
-        <div class="my-3">
-          Пол
-          <br />
-          <div class>
-          <label>
-                <input type="radio" name="radio" value="m" <?php if($values['radio'] == 'm') echo 'checked'; ?>>
-                <span class=" <?php echo ($errors['radio'] != NULL) ? 'colred' : ''; ?>">Мужской</span>
-            </label>
-            <br>
-            <label>
-                <input type="radio" name="radio" value="f" ckeked <?php if($values['radio'] == 'f') echo 'checked'; ?>>
-                <span class="<?php echo ($errors['radio'] != NULL) ? 'colred' : ''; ?>">Женский</span>
-            </label>
-            <div class="errpodinp"><?php echo $messages['radio']?></div>
-          </div>
+            <div class="mb-3">
+    <input name="number" id="number" type="text" class="form-control input <?php echo (isset($errors['number']) && !empty($errors['number'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['number']); ?>" placeholder="Номер" required>
+        <div class="invalid-feedback">
+            <?php echo $messages['number'] ?? ''; ?>
         </div>
+    </div>
+
+    <div class="mb-3">
+        <input name="email" id="email" type="email" class="form-control <?php echo (isset($errors['email']) && !empty($errors['email'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['email']); ?>" placeholder="Почта" required>
+        <div class="invalid-feedback">
+                <?php echo $messages['email'] ?? ''; ?>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <input name="date" id="date" type="date" class="form-control <?php echo (isset($errors['date']) && !empty($errors['date'])) ? 'is-invalid' : ''; ?>" value="<?php echo isp($values['date']); ?>" required>
+            <div class="invalid-feedback">
+                <?php echo $messages['date'] ?? ''; ?>
+            </div>
+    </div>
+
+    <h4>Выберите пол:</h4>
+<div class="form-check">
+    <input name="gender" value="1" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && !empty($errors['gender'])) ? 'is-invalid' : ''; ?>" id="male" <?php if($values['gender'] == '1') echo 'checked'; ?> required>
+    <label class="form-check-label" for="male">Мужчина</label>
+    <div class="invalid-feedback">
+        <?php echo $messages['gender'] ?? ''; ?>
+    </div>
+</div>
+<div class="form-check">
+    <input name="gender" value="2" type="radio" class="form-check-input <?php echo (isset($errors['gender']) && !empty($errors['gender'])) ? 'is-invalid' : ''; ?>" id="female" <?php if($values['gender'] == '2') echo 'checked'; ?> required>
+    <label class="form-check-label" for="female">Женщина</label>
+    <div class="invalid-feedback">
+        <?php echo $messages['gender'] ?? ''; ?>
+    </div>
+</div>
 
         <div>
           <label class="input">
             Любимый язык программирования<br />
-            <select  id="lang" class="my-2 <?php echo (isp($errors['lang']) != NULL) ? 'borred' : ''; ?>"  name="lang[]" multiple="multiple">
+            <select  id="selectedLangs" class="my-2 <?php echo (isp($errors['selectedLangs']) != NULL) ? 'borred' : ''; ?>"  name="selectedLangs[]" multiple="multiple">
               <option value="Pascal" <?php echo (in_array('Pascal', $langsa)) ? 'selected' : ''; ?>>Pascal</option>
               <option value="C" <?php echo (in_array('C', $langsa)) ? 'selected' : ''; ?>>C</option>
               <option value="C++" <?php echo (in_array('C++', $langsa)) ? 'selected' : ''; ?>>C++</option>
@@ -75,38 +81,34 @@
               <option value="Clojure" <?php echo (in_array('Clojure', $langsa)) ? 'selected' : ''; ?>>Clojure</option>
               <option value="Scala" <?php echo (in_array('Scala', $langsa)) ? 'selected' : ''; ?>>Scala</option>
             </select>
-            <div class="errpodinp"><?php echo $messages['lang']?></div>
+            <div class="errpodinp"><?php echo $messages['selectedLangs']?></div>
           </label>
         </div>
-        <br />
-        <div>
-          Биография <br />
-          <label>
-            <textarea name="biography" placeholder="Биография" class="input <?php echo (isp($errors['biography']) != NULL) ? 'borred' : ''; ?>"><?php echo isp($values['biography']); ?></textarea>
-            <div class="errpodinp"><?php echo $messages['biography']?></div>
-          </label>
+            <div class="mb-3">
+    <h4>Напишите о себе:</h4>
+        <textarea name="about" class="form-control" cols="30" rows="8" required><?php echo isp($values['about']); ?></textarea>
+        <div class="invalid-feedback">
+             <?php echo $messages['about'] ?? ''; ?>
+        </div>
+    </div>
+
+    <div >
+            <input type="checkbox" name="document"  <?php echo ( isp($values['document']) != NULL) ? 'checked' : ''; ?>>
+            <label for="document" class="<?php echo (isp($errors['document']) != NULL) ? 'colred' : ''; ?>">С контрактом ознакомлен (а)</label>
+            <div class="errpodinp"><?php echo $messages['document']?></div>
         </div>
 
-      
-        <div >
-            <input type="checkbox" name="check_mark"  <?php echo ( isp($values['check_mark']) != NULL) ? 'checked' : ''; ?>>
-            <label for="check_mark" class="<?php echo (isp($errors['check_mark']) != NULL) ? 'colred' : ''; ?>">С контрактом ознакомлен (а)</label>
-            <div class="errpodinp"><?php echo $messages['check_mark']?></div>
-        </div>
+<button class="btn btn-primary" type="submit">Отправить</button>
 
-        <?php
-            if($log) echo '<button type="submit" class="form_button">Изменить</button>';
-            else echo '<button type="submit" class="form_button">Отправить</button>';
-        ?>
-
-      <div class="mt-3">
+    <div class="mt-3">
       <?php 
             if($log) echo '<button type="submit" class="logout_form" name="logout_form">Выйти</button>'; 
             else echo '<a href="login.php" class="form_button" name="logout_form">Войти</a>';
         ?>
       </div>
+        </div>
 
-      </div>
+
     </form>
 </body>
 </html>

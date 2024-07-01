@@ -36,7 +36,7 @@
     $login = $_POST['login'];
     $password = md5($_POST['password']);
     try {
-      $stmt = $db->prepare("SELECT id FROM users WHERE login = ? and password = ?");
+      $stmt = $db->prepare("SELECT id FROM user WHERE login = ? and password = ?");
       $stmt->execute([$login, $password]);
       $its = $stmt->rowCount();
       if($its){
