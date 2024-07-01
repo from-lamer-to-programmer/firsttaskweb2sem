@@ -80,7 +80,7 @@
               <option value="Clojure" <?php echo (in_array('Clojure', $langsarray)) ? 'selected' : ''; ?>>Clojure</option>
               <option value="Scala" <?php echo (in_array('Scala', $langsarray)) ? 'selected' : ''; ?>>Scala</option>
             </select>
-            <div class="errpodinp"><?php echo $messages['lang']?></div>
+            <div class="errpodinp"><?php echo $messages['selectedLangs']?></div>
           </label>
         </div>
             <div class="mb-3">
