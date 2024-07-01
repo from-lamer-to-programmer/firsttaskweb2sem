@@ -137,7 +137,7 @@ else {
 
     try {
       $inQuery = implode(',', array_fill(0, count($selectedLangs), '?'));
-      $dbLangs = $db->prepare("SELECT id, language_name FROM languages WHERE language_name IN ($inQuery)");
+      $dbLangs = $db->prepare("SELECT id, language_name FROM Languages WHERE language_name IN ($inQuery)");
       foreach ($selectedLangs as $key => $value) {
         $dbLangs->bindValue(($key+1), $value);
       }
