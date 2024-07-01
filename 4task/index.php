@@ -129,10 +129,25 @@ else {
 
   
 
+  $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
+    if (empty($selectedLangs) || !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0) {
+      value_empty('selectedLangs', "Выберите хотя бы один язык", 1);
+    }
 
 
-
-  
+    try {
+      $inQuery = implode(',', array_fill(0, count($selectedLangs), '?'));
+      $dbLangs = $db->prepare("SELECT id, language_name FROM languages WHERE language_name IN ($inQuery)");
+      foreach ($selectedLangs as $key => $value) {
+        $dbLangs->bindValue(($key+1), $value);
+      }
+      $dbLangs->execute();
+      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e){
+      print('Error : ' . $e->getMessage());
+      exit();
+    }
 
 
 
@@ -167,19 +182,9 @@ else {
     $stmt->execute([$name, $surname, $number, $email, $date, $gender, $about, $document]);
     $fid = $db->lastInsertId();
     $stmt1 = $db->prepare("INSERT INTO UserLanguages (user_id, language_id) VALUES (?, ?)");
-    try {
-      $inQuery = implode(',', array_fill(0, count($selectedLangs), '?'));
-      $dbLangs = $db->prepare("SELECT id, language_name FROM languages WHERE language_name IN ($inQuery)");
-      foreach ($selectedLangs as $key => $value) {
-        $dbLangs->bindValue(($key+1), $value);
-      }
-      $dbLangs->execute();
-      $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
-    }
-    catch(PDOException $e){
-      print('Error : ' . $e->getMessage());
-      exit();
-    }
+
+
+    
     foreach($languages as $row){
         $stmt1->execute([$fid, $row['id']]);
     }
