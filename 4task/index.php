@@ -127,7 +127,10 @@ else {
 
  
 
-  value_empty('selectedLangs', "Выберите хотя бы один язык", empty($selectedLangs));
+ $allowedLangs = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scara");
+    if (empty($selectedLangs) || !is_array($selectedLangs) || count(array_diff($selectedLangs, $allowedLangs)) > 0) {
+      value_empty('selectedLangs', "Выберите хотя бы один язык", 1);
+    }
   
 
   
