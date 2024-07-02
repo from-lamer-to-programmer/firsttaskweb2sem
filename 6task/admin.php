@@ -60,7 +60,7 @@ $haveAdmin = 0;
                       <td class="wb">'.$row['about'].'</td>
                       <td>';
               $dbl = $db->prepare("SELECT * FROM UserLanguages fdl
-                                    JOIN languages l ON l.id = fdl.language_id
+                                    JOIN Languages l ON l.id = fdl.language_id
                                     WHERE user_id = ?");
               $dbl->execute([$row['id']]);
               while($row1 = $dbl->fetch(PDO::FETCH_ASSOC)){
