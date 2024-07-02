@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $dbL->execute([$user_id]);
       $langsa = [];
       foreach($dbL->fetchAll(PDO::FETCH_ASSOC) as $item){
-        $langsa[] = $item['name'];
+        $langsa[] = $item['language_name'];
       }
       setVal('name', $fet['name']);
       setVal('surname', $fet['surname']);
@@ -130,6 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     catch(PDOException $e){
       print('Error : ' . $e->getMessage());
+      print($_SESSION['user_id']);
       exit();
     }
   }
