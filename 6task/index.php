@@ -119,13 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $langsa[] = $item['name'];
       }
       setVal('name', $fet['name']);
+      setVal('surname', $fet['surname']);
       setVal('number', $fet['number']);
       setVal('email', $fet['email']);
-      setVal('data', date("Y-m-d", $fet['data']));
-      setVal('radio', $fet['radio']);
-      setVal('lang', $lang);
-      setVal('biography', $fet['biography']);
-      setVal('check_mark', '1');
+      setVal('date', date("Y-m-d", $fet['date']));
+      setVal('gender', $fet['gender']);
+      setVal('selectedLangs', $selectedLangs);
+      setVal('about', $fet['about']);
+      setVal('document', '1');
     }
     catch(PDOException $e){
       print('Error : ' . $e->getMessage());
