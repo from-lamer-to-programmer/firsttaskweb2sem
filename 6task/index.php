@@ -9,7 +9,7 @@ if(strpos($_SERVER['REQUEST_URI'], 'index.php') === false){
 
 $log = !empty($_SESSION['login']);
 $adminLog = !empty($_SERVER['PHP_AUTH_USER']);
-$uid = isset($_SESSION['id']) ? $_SESSION['id'] : '';
+$uid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
 $getUid = isset($_GET['uid']) ? strip_tags($_GET['uid']) : '';
 
 if($adminLog){
@@ -106,10 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($error && $log ) {
     try {
       $dbFD = $db->prepare("SELECT * FROM Users WHERE id = ?");
-      $dbFD->execute([$_SESSION['id']]);
+      $dbFD->execute([$_SESSION['user_id']]);
       $fet = $dbFD->fetchAll(PDO::FETCH_ASSOC)[0];
       $user_id = $fet['id'];
-      $_SESSION['id'] = $user_id;
+      $_SESSION['user_id'] = $user_id;
       $dbL = $db->prepare("SELECT l.language_name FROM UserLanguages fdl
                             JOIN Languages l ON l.id = fdl.language_id
                             WHERE user_id = ?");
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     catch(PDOException $e){
       print('Error : ' . $e->getMessage());
-      print($_SESSION['id']);
+      print($_SESSION['user_id']);
       exit();
     }
   }
@@ -286,16 +286,16 @@ else {
   if ($log) { 
       
     $stmt = $db->prepare("UPDATE Users SET name=?, surname=?, number=?, email=?, date=?, gender=?, about=?, document=? WHERE id = ?");
-    $stmt->execute([$name, $surname, $number, $email, $date, $gender, $about, $document, $_SESSION['id']]);
+    $stmt->execute([$name, $surname, $number, $email, $date, $gender, $about, $document, $_SESSION['user_id']]);
     var_dump ($data);
     print_r($db->errorInfo());
 
     $stmt = $db->prepare("DELETE FROM UserLanguages WHERE user_id = ?");
-    $stmt->execute([$_SESSION['id']]);
+    $stmt->execute([$_SESSION['user_id']]);
 
     $stmt1 = $db->prepare("INSERT INTO UserLanguages (user_id, language_id) VALUES (?, ?)");
     foreach($languages as $row){
-        $stmt1->execute([$_SESSION['id'], $row['id']]);
+        $stmt1->execute([$_SESSION['user_id'], $row['id']]);
     }
 
     if($adminLog) 
