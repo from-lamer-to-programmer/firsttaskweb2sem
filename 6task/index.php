@@ -108,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $dbFD = $db->prepare("SELECT * FROM Users WHERE id = ?");
       $dbFD->execute([$_SESSION['user_id']]);
       $fet = $dbFD->fetchAll(PDO::FETCH_ASSOC)[0];
+      
       $user_id = $fet['id'];
       $_SESSION['user_id'] = $user_id;
       $dbL = $db->prepare("SELECT l.language_name FROM UserLanguages fdl
