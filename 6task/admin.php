@@ -64,10 +64,10 @@ $haveAdmin = 0;
                                     WHERE user_id = ?");
               $dbl->execute([$row['id']]);
               while($row1 = $dbl->fetch(PDO::FETCH_ASSOC)){
-                echo $row1['name'].'<br>';
+                echo $row1['language_name'].'<br>';
               }
               echo '</td>
-                    <td><a href="./index.php?uid='.$row['user_id'].'" target="_blank">Изменить</a></td>
+                    <td><a href="./index.php?uid='.$row['id'].'" target="_blank">Изменить</a></td>
                     <td><button class="remove">Удалить</button></td>
                   </tr>';
             }
