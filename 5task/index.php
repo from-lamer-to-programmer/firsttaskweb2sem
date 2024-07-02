@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors = array();
   $messages = array();
   $values = array();
-
+  $error = true;
 
   function setVal($enName, $param){
     global $values;
