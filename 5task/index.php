@@ -77,12 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   if ($error && !empty($_SESSION['login'])) {
     try {
-      $dbFD = $db->prepare("SELECT * FROM form_data WHERE user_id = ?");
+      $dbFD = $db->prepare("SELECT * FROM Users WHERE id = ?");
       $dbFD->execute([$_SESSION['user_id']]);
       $fet = $dbFD->fetchAll(PDO::FETCH_ASSOC)[0];
       $form_id = $fet['id'];
       $_SESSION['form_id'] = $form_id;
-      $dbL = $db->prepare("SELECT l.name FROM form_data_lang f
+      $dbL = $db->prepare("SELECT l.language_name FROM UserLanguages f
                             LEFT JOIN Languages l ON l.id = f.language_id
                             WHERE f.user_id = ?");
       $dbL->execute([$form_id]);
