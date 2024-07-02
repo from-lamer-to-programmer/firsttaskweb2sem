@@ -83,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $form_id = $fet['id'];
       $_SESSION['form_id'] = $form_id;
       $dbL = $db->prepare("SELECT l.name FROM form_data_lang f
-                            LEFT JOIN languages l ON l.id = f.id_lang
-                            WHERE f.id_form = ?");
+                            LEFT JOIN Languages l ON l.id = f.language_id
+                            WHERE f.user_id = ?");
       $dbL->execute([$form_id]);
       $langsa = [];
       foreach($dbL->fetchAll(PDO::FETCH_ASSOC) as $item){
