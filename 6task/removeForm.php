@@ -14,9 +14,10 @@
     $dbf = $db->prepare("SELECT * FROM Users WHERE id = ?");
     $dbf->execute([$id]);
     if($dbf->rowCount() != 0){
-        $dbdel = $db->prepare("DELETE FROM Users WHERE id = ?");
-        $dbdel->execute([$id]);
         $dbdel = $db->prepare("DELETE FROM UserLanguages WHERE user_id = ?");
+        $dbdel->execute([$id]);
+        $dbdel = $db->prepare("DELETE FROM Users WHERE id = ?");
+        
         ($dbdel->execute([$id])) ? res('success', "Форма удалена") : res('error', "Ошибка удаления");
     }
     else{
